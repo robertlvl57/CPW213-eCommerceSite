@@ -7,26 +7,32 @@
 
 <form method="post">
     <label asp-for="Title"></label>
-    <input asp-for="Title" />
+    <input class="form-control" asp-for="Title" />
     <span asp-validation-for="Title"></span>
     <br />
 
     <label asp-for="Rating"></label>
-    <input asp-for="Rating" />
+    <select class="form-control" asp-for="Rating">
+        <option>E</option>
+        <option>E10+</option>
+        <option>T</option>
+        <option>M</option>
+        <option>A</option>
+    </select>
     <span asp-validation-for="Rating"></span>
     <br />
 
     <label asp-for="Description"></label>
-    <input asp-for="Description" />
+    <input class="form-control" asp-for="Description" />
     <span asp-validation-for="Description"></span>
     <br />
 
     <label asp-for="Price"></label>
-    <input asp-for="Price" />
+    <input class="form-control" asp-for="Price" />
     <span asp-validation-for="Price"></span>
     <br />
 
-    <input type="submit" value="Add Game" />
+    <input class="btn btn-primary" type="submit" value="Add Game" />
 </form>
 
 @*
