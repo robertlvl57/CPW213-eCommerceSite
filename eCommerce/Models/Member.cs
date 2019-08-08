@@ -11,6 +11,8 @@ namespace eCommerce.Models
     /// </summary>
     public class Member
     {
+        public int MemberId { get; set; }
+
         /// <summary>
         /// The first and last name of the Member.
         /// es. J. Doe
