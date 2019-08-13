@@ -41,5 +41,25 @@ namespace eCommerce.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool isMember = await MemberDb.IsLoginValid(model, _context);
+                if (isMember)
+                {
+                    TempData["Message"] = "Logged in successfully";
+                    return RedirectToAction("Index", "Home");
+                }
+                else // Credential invalid
+                {
+                    // Adding model error with no key, will display error message in the validation summary
+                    ModelState.AddModelError(string.Empty, "I'm sorry, your credentials did not match any records in our database");
+                }
+            }
+
+            return View(model);
+        }
     }
 }
