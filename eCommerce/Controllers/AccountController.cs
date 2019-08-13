@@ -36,5 +36,10 @@ namespace eCommerce.Controllers
 
             return View(m);
         }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
     }
 }
