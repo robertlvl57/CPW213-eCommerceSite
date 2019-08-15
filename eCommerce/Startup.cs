@@ -33,6 +33,15 @@ namespace eCommerce
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Configure Session Management
+            services.AddHttpContextAccessor();
+            services.AddDistributedMemoryCache(); // Stores session in-memory
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.IsEssential = true;
+            });
+
             string connection = Configuration.GetConnectionString("GameDbConnection");
 
             // Register DB Context
@@ -67,6 +76,7 @@ namespace eCommerce
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession(); // Use configured session
 
             app.UseMvc(routes =>
             {
