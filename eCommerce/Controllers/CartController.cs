@@ -25,19 +25,20 @@ namespace eCommerce.Controllers
         {
             VideoGame g = await VideoGameDb.GetGameById(id, _context);
 
-            // Convert game to a string
-            string data = JsonConvert.SerializeObject(g);
-
-            // Set up cookie
-            CookieOptions options = new CookieOptions()
-            {
-                Secure = true,
-                MaxAge = TimeSpan.FromDays(365) // A whole year
-            };
-
-            _httpAccessor.HttpContext.Response.Cookies.Append("CartCookie", data, options);
+            CartHelper.Add(_httpAccessor, g);
 
             return RedirectToAction("Index", "Library");
+
+            //// Set up cookie
+            //CookieOptions options = new CookieOptions()
+            //{
+            //    Secure = true,
+            //    MaxAge = TimeSpan.FromDays(365) // A whole year
+            //};
+
+            //_httpAccessor.HttpContext.Response.Cookies.Append("CartCookie", data, options);
+
+            
         }
     }
 }
