@@ -17,6 +17,41 @@ namespace eCommerce.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> Search(SearchCriteria criteria)
+        {
+            if (ValidSearch(criteria))
+            {
+                criteria.GameResults = await VideoGameDb.Search(_context, criteria);
+            }
+            else
+            {
+                criteria.GameResults = new List<VideoGame>();
+            }
+            
+            return View(criteria);
+        }
+
+        /// <summary>
+        /// Return true if user searched by at least
+        /// 1 peice of criteria
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        private bool ValidSearch(SearchCriteria criteria)
+        {
+            if(criteria.Title == null &&
+                criteria.Rating == null &&
+                criteria.MinPrice == null &&
+                criteria.MaxPrice == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         [HttpGet] 
         public async Task<IActionResult> Index(int? id)
         {
