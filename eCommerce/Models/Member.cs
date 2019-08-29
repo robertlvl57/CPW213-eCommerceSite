@@ -44,7 +44,7 @@ namespace eCommerce.Models
         /// </summary>
         [Display(Name = "Date of birth")]
         [DataType(DataType.Date)]
-        // Required because DateTime is a structure (it's a value type)
+        [DateOfBirth]
         public DateTime DateOfBirth { get; set; }
     }
 
@@ -60,5 +60,26 @@ namespace eCommerce.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+    }
+
+    public class DateOfBirthAttribute : ValidationAttribute
+    {
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            Member m = validationContext.ObjectInstance as Member;
+
+            // Get the value of DateOfBirth for the model
+            DateTime dob = Convert.ToDateTime(value);
+
+            DateTime oldestAge = DateTime.Today.AddYears(-120);
+
+            if(dob > DateTime.Today || dob < oldestAge)
+            {
+                string errMsg = "You cannot be born in the future or more than 120 in the past";
+                return new ValidationResult(errMsg);
+            }
+
+            return ValidationResult.Success;
+        }
     }
 }
