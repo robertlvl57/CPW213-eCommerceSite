@@ -9,6 +9,26 @@ namespace eCommerce.Data
 {
     public static class MemberDb
     {
+        public async static Task<bool> IsUsernameTaken(GameContext context, string username)
+        {
+            return await context.Members
+                    .Where(mem => mem.Username == username.Trim())
+                    .AnyAsync();
+        }
+
+        /// <summary>
+        /// Return true if email is already taken. Not case sensitive
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public async static Task<bool> IsEmailTaken(GameContext context, string email)
+        {
+            return await context.Members
+                    .Where(m => m.EmailAddress == email.Trim())
+                    .AnyAsync();
+        }
+
         /// <summary>
         /// Adds a member to the database. Returns the member with their MemberId populated
         /// </summary>
